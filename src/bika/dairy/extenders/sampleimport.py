@@ -17,11 +17,13 @@ class SampleImportSchemaModifier(object):
         """
 
         dgf = schema['SampleData']
-        temp_var = [i for i in dgf.columns]
-        if "Herd" not in temp_var:
-            temp_var.append("Herd")
+        new_columns = [i for i in dgf.columns]
+        if "PatientID" in new_columns:
+            new_columns.remove('PatientID')
 
-        dgf.columns = tuple(temp_var)
-        dgf.widget.columns["Herd"] = Column('Herd')
+        idx = new_columns.index('SamplePoint')
+        new_columns.insert(idx, "PatientID")
+        dgf.columns = tuple(new_columns)
+        dgf.widget.columns["PatientID"] = Column('PatientID')
 
         return schema

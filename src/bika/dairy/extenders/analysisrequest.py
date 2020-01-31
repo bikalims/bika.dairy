@@ -14,13 +14,13 @@ class AnalysisRequestSchemaExtender(object):
 
     fields = [
         ExtStringField(
-            'Herd',
+            'PatientID',
             searchable=True,
             mode="rw",
             read_permission=permissions.View,
             write_permission=permissions.ModifyPortalContent,
             widget=StringWidget(
-                label=_("Herd"),
+                label=_("PatientID"),
                 size=20,
                 render_own_label=True,
                 visible={
@@ -53,7 +53,7 @@ class AnalysisRequestSchemaExtender(object):
         self.context = context
 
     def getOrder(self, schematas):
-        schematas["default"].append("Herd")
+        schematas["default"].append("PatientID")
         return schematas
 
     def getFields(self):
