@@ -1,0 +1,17 @@
+<configure
+        xmlns="http://namespaces.zope.org/zope"
+        i18n_domain="bika.dairy">
+
+    <include package="archetypes.schemaextender"/>
+
+    <adapter
+        name = "bika.dairy.analysisrequest"
+        factory=".analysisrequest.AnalysisRequestSchemaExtender"
+     />
+    <adapter
+        for = "senaite.sampleimporter.interfaces.ISampleImport"
+        name = "bika.dairy.sampleimport"
+        factory=".sampleimport.SampleImportSchemaModifier"
+     />
+
+</configure>

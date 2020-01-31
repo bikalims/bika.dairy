@@ -1,0 +1,8 @@
+setuptools
+senaite.lims>=1.3.2
+
+[test]
+Products.PloneTestCase
+Products.SecureMailHost
+plone.app.testing
+unittest2
