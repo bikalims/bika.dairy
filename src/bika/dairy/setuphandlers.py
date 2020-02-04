@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-# This file is part of SENAITE.SAMPLEIMPORTER.
+# This file is part of BIKA.DAIRY.
 #
-# SENAITE.SAMPLEIMPORTER is free software: you can redistribute it and/or modify
+# BIKA.DAIRY is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by the Free
 # Software Foundation, version 2.
 #
@@ -18,11 +18,9 @@
 # Copyright 2019 by it's authors.
 # Some rights reserved, see README and LICENSE.
 
-from bika.lims.utils import tmpID
-from Products.CMFPlone.utils import _createObjectByType
-from senaite.sampleimporter import PRODUCT_NAME
-from senaite.sampleimporter import PROFILE_ID
-from senaite.sampleimporter import logger
+from bika.dairy import PRODUCT_NAME
+from bika.dairy import PROFILE_ID
+from bika.dairy import logger
 
 
 def pre_install(portal_setup):
@@ -34,10 +32,10 @@ def pre_install(portal_setup):
     context = portal_setup._getImportContext(PROFILE_ID)
     portal = context.getSite()  # noqa
 
-    # Only install senaite.lims once!
-    qi = portal.portal_quickinstaller
-    if not qi.isProductInstalled("senaite.lims"):
-        portal_setup.runAllImportStepsFromProfile("profile-senaite.lims:default")
+    # # Only install senaite.lims once!
+    # qi = portal.portal_quickinstaller
+    # if not qi.isProductInstalled("senaite.lims"):
+    #     portal_setup.runAllImportStepsFromProfile("profile-senaite.lims:default")
 
     logger.info("{} pre-install handler [DONE]".format(PRODUCT_NAME.upper()))
 
@@ -47,18 +45,14 @@ def post_install(portal_setup):
     This handler is registered as a *post_handler* in the generic setup profile
     :param portal_setup: SetupTool
     """
-    logger.info("{} install handler [BEGIN]".format(PRODUCT_NAME.upper()))
+    logger.info("{} post-install handler [BEGIN]".format(PRODUCT_NAME.upper()))
     context = portal_setup._getImportContext(PROFILE_ID)
     portal = context.getSite()  # noqa
 
-    # Add Dairy Sample Points
-    points = ['FL', 'FR', 'BL', 'BR']
-    for point in points:
-        sp = _createObjectByType(
-            'SamplePoint',
-            portal.bika_setup.bika_samplepoints,
-            tmpID())
-        sp.setTitle(point)
-        sp._renameAfterCreation()
+    # Allow Asset type in Client
+    client_fti = portal.portal_types.getTypeInfo("Client")
+    allowed_types = list(client_fti.allowed_content_types)
+    allowed_types.append('Asset')
+    client_fti.allowed_content_types = allowed_types
 
-    logger.info("{} install handler [DONE]".format(PRODUCT_NAME.upper()))
+    logger.info("{} post-install handler [DONE]".format(PRODUCT_NAME.upper()))

@@ -16,6 +16,7 @@ class SampleImportSchemaModifier(object):
         """
         """
 
+        # Change order only
         dgf = schema['SampleData']
         new_columns = [i for i in dgf.columns]
         if "PatientID" in new_columns:

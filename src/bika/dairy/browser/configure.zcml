@@ -1,0 +1,14 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="bika.dairy">
+
+    <browser:page
+      for="bika.lims.interfaces.IClient"
+      name="assets"
+      class="bika.dairy.browser.asset.ClientAssetsView"
+      permission="senaite.core.permissions.ManageAnalysisRequests"
+      layer="bika.dairy.interfaces.IBikaDairyLayer"
+    />
+
+</configure>

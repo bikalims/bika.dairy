@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<object xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+	name="portal_actions"
+	meta_type="Plone Actions Tool"
+	purge="True">
+
+    <object name="object" meta_type="CMF Action Category">
+        <!-- Assets listing on Client -->
+        <object name="assets" meta_type="CMF Action" i18n:domain="bika.dairy">
+          <property name="title" i18n:translate="">Assets</property>
+          <property name="description" i18n:translate="">List Client's Assets</property>
+          <property name="url_expr">string:${object_url}/@@assets</property>
+          <property name="link_target"></property>
+          <property name="icon_expr"></property>
+          <property name="permissions">
+            <element value="senaite.core: Manage Analysis Requests"/>
+          </property>
+          <property name="available_expr">python:here.portal_type == 'Client'</property>
+          <property name="visible">True</property>
+        </object>
+    </object>
+
+</object>
