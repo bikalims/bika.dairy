@@ -18,7 +18,6 @@
 # Copyright 2018-2019 by it's authors.
 # Some rights reserved, see README and LICENSE.
 
-from AccessControl import ClassSecurityInfo
 from bika.lims.content.bikaschema import BikaSchema
 from bika.lims.idserver import renameAfterCreation
 from Products.Archetypes.atapi import BaseContent

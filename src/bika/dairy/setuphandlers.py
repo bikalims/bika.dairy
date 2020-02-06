@@ -21,6 +21,7 @@
 from bika.dairy import PRODUCT_NAME
 from bika.dairy import PROFILE_ID
 from bika.dairy import logger
+from Products.CMFCore.utils import getToolByName
 
 
 def pre_install(portal_setup):
@@ -50,9 +51,18 @@ def post_install(portal_setup):
     portal = context.getSite()  # noqa
 
     # Allow Asset type in Client
+    logger.info("{} post-install handler: allow Asset in Client".format(PRODUCT_NAME.upper()))
     client_fti = portal.portal_types.getTypeInfo("Client")
     allowed_types = list(client_fti.allowed_content_types)
     allowed_types.append('Asset')
     client_fti.allowed_content_types = allowed_types
 
+    # update bika_setup_catalog
+    logger.info("{} post-install handler: add Asset to portal catalog".format(PRODUCT_NAME.upper()))
+    at = getToolByName(portal, 'archetype_tool')
+    at.setCatalogsByType('Strain', ['portal_catalog', ])
+
+    # # update bika_catalog
+    # bc = getToolByName(portal, 'bika_catalog')
+    # addIndex(bc, 'getStrain', 'FieldIndex')
     logger.info("{} post-install handler [DONE]".format(PRODUCT_NAME.upper()))

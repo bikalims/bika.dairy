@@ -67,6 +67,7 @@ class AssetsView(BikaListingView):
         }
 
     def folderitems(self, **kwargs):
+        import pdb; pdb.set_trace()
         items = super(AssetsView, self).folderitems()
         for x in range(len(items)):
             if 'obj' not in items[x]:
@@ -107,25 +108,3 @@ class ClientAssetsView(AssetsView):
                          'DateValidated',
                          'state_title']},
         ]
-
-
-class ClientAssetAddView(BrowserView):
-    implements(IViewView)
-    template = ViewPageTemplateFile('templates/asset_add.pt')
-
-    def __init__(self, context, request):
-        super(ClientAssetAddView, self).__init__(context, request)
-        alsoProvides(request, IContentListing)
-
-    def __call__(self):
-        request = self.request
-        form = request.form
-        CheckAuthenticator(form)
-        if form.get('submitted'):
-            # Create the asset object
-            asset = _createObjectByType("Asset", self.context, tmpID())
-            asset.processForm()
-            asset.setTitle(asset.getId())
-            self.request.response.redirect(asset.absolute_url())
-        else:
-            return self.template()
