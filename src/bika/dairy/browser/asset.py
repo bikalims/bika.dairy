@@ -19,13 +19,11 @@
 # Some rights reserved, see README and LICENSE.
 
 from bika.dairy import bikaDairyMessageFactory as _
-from bika.lims.browser import BrowserView
 from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims.interfaces import IClient
 from plone.app.contentlisting.interfaces import IContentListing
 from plone.app.layout.globals.interfaces import IViewView
-from plone.protect import CheckAuthenticator
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+# from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.interface import alsoProvides
 from zope.interface import implements
 
@@ -57,7 +55,7 @@ class AssetsView(BikaListingView):
         self.form_id = "assets"
 
         self.icon = \
-            self.portal_url + "/++resource++bika.dairy.static/img/asset_big.png"
+            self.portal_url + "/++resource++bika.dairy/static/img/asset_big.png"
         self.title = self.context.translate(_("Assets"))
         self.description = ""
 

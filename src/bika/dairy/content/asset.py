@@ -39,7 +39,7 @@ class Asset(BaseContent):
     implements(IAsset)
     schema = schema
 
-    _at_rename_after_creation = True
+    _at_rename_after_creation = False
 
     def _renameAfterCreation(self, check_auto_id=False):
         renameAfterCreation(self)

@@ -60,9 +60,13 @@ def post_install(portal_setup):
     # update bika_setup_catalog
     logger.info("{} post-install handler: add Asset to portal catalog".format(PRODUCT_NAME.upper()))
     at = getToolByName(portal, 'archetype_tool')
-    at.setCatalogsByType('Strain', ['portal_catalog', ])
+    at.setCatalogsByType('Asset', ['portal_catalog', ])
 
-    # # update bika_catalog
-    # bc = getToolByName(portal, 'bika_catalog')
-    # addIndex(bc, 'getStrain', 'FieldIndex')
+    # update portal_catalog
+    pc = getToolByName(portal, 'portal_catalog')
+    if 'getAsset' not in pc.indexes():
+        logger.info("{} post-install handler: add getAsset to portal catalog".format(PRODUCT_NAME.upper()))
+        pc.addIndex('getAsset', 'FieldIndex')
+        pc.manage_reindexIndex('getAsset')
+
     logger.info("{} post-install handler [DONE]".format(PRODUCT_NAME.upper()))
