@@ -41,7 +41,7 @@ class Asset(BaseContent):
     schema = schema
     displayContentsTab = False
     isPrincipiaFolderish = 0
-    _at_rename_after_creation = False
+    _at_rename_after_creation = True
 
     def _renameAfterCreation(self, check_auto_id=False):
         renameAfterCreation(self)

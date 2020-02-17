@@ -69,4 +69,27 @@ def post_install(portal_setup):
         pc.addIndex('getAsset', 'FieldIndex')
         pc.manage_reindexIndex('getAsset')
 
+    # configure ID Server
+    asset_format = {
+        "portal_type": "Asset",
+        "form": "AST-{seq:04d}",
+        "prefix": "asset",
+        "sequence_type": "generated",
+        "counter_type": "",
+        "split_length": 1,
+    }
+    bs = portal.bika_setup
+    id_map = bs.getIDFormatting()
+    id_format = filter(lambda id: id.get("portal_type", "") == 'Asset', id_map)
+    if id_format:
+        logger.info("ID Format for Asset already set: '{}' [SKIP]"
+                    .format(id_format[0]["form"]))
+    else:
+        logger.info("Applying ID format to Asset")
+        ids = list()
+        for record in id_map:
+            ids.append(record)
+        ids.append(asset_format)
+        bs.setIDFormatting(ids)
+
     logger.info("{} post-install handler [DONE]".format(PRODUCT_NAME.upper()))

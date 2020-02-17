@@ -19,7 +19,6 @@
 # Some rights reserved, see README and LICENSE.
 
 import collections
-from bika.lims.utils import get_registry_value
 from Products.CMFCore.permissions import ModifyPortalContent
 from plone.app.content.browser.interfaces import IFolderContentsView
 from zope.interface import implements
@@ -36,9 +35,6 @@ class ClientAssetsView(BikaListingView):
     """
     implements(IFolderContentsView)
 
-    _LANDING_PAGE_REGISTRY_KEY = "bika.lims.client.default_landing_page"
-    _DEFAULT_LANDING_PAGE = "assets"
-
     def __init__(self, context, request):
         super(ClientAssetsView, self).__init__(context, request)
 
@@ -54,8 +50,6 @@ class ClientAssetsView(BikaListingView):
         self.show_select_column = False
         self.pagesize = 25
         self.form_id = "list_asset"
-        self.landing_page = get_registry_value(
-            self._LANDING_PAGE_REGISTRY_KEY, self._DEFAULT_LANDING_PAGE)
         request.set("disable_border", 1)
 
         self.title = self.context.translate(_("Assets"))
@@ -121,11 +115,11 @@ class ClientAssetsView(BikaListingView):
         return check_permission(ModifyPortalContent, obj)
 
     def folderitem(self, obj, item, index):
-        """Applies new properties to the item (Client) that is currently being
+        """Applies new properties to the item (Asset) that is currently being
         rendered as a row in the list
 
-        :param obj: client to be rendered as a row in the list
-        :param item: dict representation of the client, suitable for the list
+        :param obj: asset to be rendered as a row in the list
+        :param item: dict representation of the asset, suitable for the list
         :param index: current position of the item within the list
         :type obj: ATContentType/DexterityContentType
         :type item: dict
@@ -133,14 +127,15 @@ class ClientAssetsView(BikaListingView):
         :return: the dict representation of the item
         :rtype: dict
         """
-        # render a link to the defined start page
-        link_url = "{}/{}".format(item["url"], self.landing_page)
-        item["replace"]["title"] = get_link(link_url, item["title"])
+        item = super(ClientAssetsView, self).folderitem(obj, item, index)
+
+        # render a link to the view page
+        item["replace"]["title"] = get_link(item['url'], item["title"])
         return item
 
 
-def asset_match(client, search_term):
+def asset_match(asset, search_term):
     # Check if the search_term matches some common fields
-    if search_term in client.Title().lower():
+    if search_term in asset.Title().lower():
         return True
     return False
