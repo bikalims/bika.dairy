@@ -19,21 +19,20 @@
 # Some rights reserved, see README and LICENSE.
 
 import collections
+from senaite.core.listing.interfaces import IListingView
+from senaite.core.listing.interfaces import IListingViewAdapter
+from senaite.core.listing.view import ListingView
 from Products.CMFCore.permissions import ModifyPortalContent
-from plone.app.content.browser.interfaces import IFolderContentsView
+from zope.component import adapts
 from zope.interface import implements
 
 from bika.dairy import bikaDairyMessageFactory as _
-from bika.lims.browser.bika_listing import BikaListingView
-# from bika.lims.interfaces import IClient
 from bika.lims.utils import check_permission
-from bika.lims.utils import get_link
 
 
-class ClientAssetsView(BikaListingView):
+class ClientAssetsView(ListingView):
     """Listing View for Assets
     """
-    implements(IFolderContentsView)
 
     def __init__(self, context, request):
         super(ClientAssetsView, self).__init__(context, request)
@@ -60,6 +59,7 @@ class ClientAssetsView(BikaListingView):
 
         self.columns = collections.OrderedDict((
             ("Title", {
+                "replace_url": "absolute_url",
                 "title": _("Title")}),
             ("state_title", {
                 "title": _("State")}),
@@ -104,7 +104,7 @@ class ClientAssetsView(BikaListingView):
                                                    self.context)
 
     def isItemAllowed(self, obj):
-        """Returns true if the current user has Manage AR rights for the
+        """Returns true if the current user has rights for the
         current Client (item) to be rendered.
 
         :param obj: client to be rendered as a row in the list
@@ -114,23 +114,19 @@ class ClientAssetsView(BikaListingView):
         """
         return check_permission(ModifyPortalContent, obj)
 
-    def folderitem(self, obj, item, index):
-        """Applies new properties to the item (Asset) that is currently being
-        rendered as a row in the list
 
-        :param obj: asset to be rendered as a row in the list
-        :param item: dict representation of the asset, suitable for the list
-        :param index: current position of the item within the list
-        :type obj: ATContentType/DexterityContentType
-        :type item: dict
-        :type index: int
-        :return: the dict representation of the item
-        :rtype: dict
-        """
-        item = super(ClientAssetsView, self).folderitem(obj, item, index)
+class ClientAssetsViewAdapter(object):
+    adapts(IListingView)
+    implements(IListingViewAdapter)
 
-        # render a link to the view page
-        item["replace"]["title"] = get_link(item['url'], item["title"])
+    def __init__(self, listing, context):
+        self.listing = listing
+        self.context = context
+
+    def before_render(self):
+        return
+
+    def folder_item(self, obj, item, index):
         return item
 
 
