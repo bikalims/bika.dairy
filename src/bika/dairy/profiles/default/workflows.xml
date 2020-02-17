@@ -5,7 +5,7 @@
   </property>
   <bindings>
     <type type_id="Asset">
-      <bound-workflow workflow_id="senaite_deactivate_type_workflow"/>
+      <bound-workflow workflow_id="senaite_one_state_workflow"/>
     </type>
   </bindings>
 </object>

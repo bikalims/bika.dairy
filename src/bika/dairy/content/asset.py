@@ -15,11 +15,12 @@
 # this program; if not, write to the Free Software Foundation, Inc., 51
 # Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
-# Copyright 2018-2019 by it's authors.
+# Copyright 2018-2020 by it's authors.
 # Some rights reserved, see README and LICENSE.
 
 from bika.lims.content.bikaschema import BikaSchema
 from bika.lims.idserver import renameAfterCreation
+from bika.lims.interfaces import IDeactivable
 from Products.Archetypes.atapi import BaseContent
 from Products.Archetypes.atapi import registerType
 from bika.dairy.interfaces import IAsset
@@ -30,15 +31,16 @@ from zope.interface import implements
 
 schema = BikaSchema.copy()
 
-schema['title'].validators = ()
-# Update the validation layer after change the validator in runtime
-schema['title']._validationLayer()
+
+schema['title'].required = True
+schema['title'].widget.visible = True
 
 
 class Asset(BaseContent):
-    implements(IAsset)
+    implements(IAsset, IDeactivable)
     schema = schema
-
+    displayContentsTab = False
+    isPrincipiaFolderish = 0
     _at_rename_after_creation = False
 
     def _renameAfterCreation(self, check_auto_id=False):

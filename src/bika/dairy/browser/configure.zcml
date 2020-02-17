@@ -7,7 +7,7 @@
       for="bika.lims.interfaces.IClient"
       name="assets"
       class="bika.dairy.browser.asset.ClientAssetsView"
-      permission="senaite.core.permissions.ManageAnalysisRequests"
+      permission="cmf.ListFolderContents"
       layer="bika.dairy.interfaces.IBikaDairyLayer"
     />
 
