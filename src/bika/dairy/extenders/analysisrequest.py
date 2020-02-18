@@ -1,7 +1,7 @@
 from archetypes.schemaextender.interfaces import IOrderableSchemaExtender
 from bika.lims.fields import ExtStringField
 from bika.lims.interfaces import IAnalysisRequest
-from bika.dairy import bikaDiaryMessageFactory as _
+from bika.dairy import bikaDairyMessageFactory as _
 from Products.Archetypes.public import StringWidget
 from Products.CMFCore import permissions
 from zope.component import adapts

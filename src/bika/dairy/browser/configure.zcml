@@ -1,0 +1,20 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="bika.dairy">
+
+    <browser:page
+      for="bika.lims.interfaces.IClient"
+      name="assets"
+      class="bika.dairy.browser.asset.ClientAssetsView"
+      permission="cmf.ListFolderContents"
+      layer="bika.dairy.interfaces.IBikaDairyLayer"
+    />
+
+    <subscriber
+      for="bika.dairy.browser.asset.ClientAssetsView
+           bika.lims.interfaces.IClient"
+      provides="senaite.core.listing.interfaces.IListingViewAdapter"
+      factory="bika.dairy.browser.asset.ClientAssetsViewAdapter"
+    />
+</configure>

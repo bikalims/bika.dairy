@@ -7,7 +7,13 @@
 
     <five:registerPackage package="." initialize=".initialize"/>
 
+    <include package=".browser" />
     <include package=".extenders" />
+
+    <!-- Static resource directory -->
+    <browser:resourceDirectory
+        name="bika.dairy.static"
+        directory="static" />
 
     <genericsetup:registerProfile
             name="default"
