@@ -19,12 +19,14 @@
 # Some rights reserved, see README and LICENSE.
 
 import collections
-from senaite.core.listing.interfaces import IListingView
-from senaite.core.listing.interfaces import IListingViewAdapter
-from senaite.core.listing.view import ListingView
 from Products.CMFCore.permissions import ModifyPortalContent
 from zope.component import adapts
 from zope.interface import implements
+
+from bika.lims.utils import get_link
+from senaite.core.listing.interfaces import IListingView
+from senaite.core.listing.interfaces import IListingViewAdapter
+from senaite.core.listing.view import ListingView
 
 from bika.dairy import bikaDairyMessageFactory as _
 from bika.lims.utils import check_permission
@@ -59,7 +61,6 @@ class ClientAssetsView(ListingView):
 
         self.columns = collections.OrderedDict((
             ("Title", {
-                "replace_url": "absolute_url",
                 "title": _("Title")}),
             ("state_title", {
                 "title": _("State")}),
@@ -127,6 +128,7 @@ class ClientAssetsViewAdapter(object):
         return
 
     def folder_item(self, obj, item, index):
+        item["replace"]["Title"] = get_link(item['url'], item["title"])
         return item
 
 
