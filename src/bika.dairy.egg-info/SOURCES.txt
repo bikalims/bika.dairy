@@ -14,12 +14,10 @@ src/bika.dairy.egg-info/namespace_packages.txt
 src/bika.dairy.egg-info/not-zip-safe
 src/bika.dairy.egg-info/requires.txt
 src/bika.dairy.egg-info/top_level.txt
-src/bika/dairy/.setuphandlers.py.swp
 src/bika/dairy/__init__.py
 src/bika/dairy/configure.zcml
 src/bika/dairy/interfaces.py
 src/bika/dairy/setuphandlers.py
-src/bika/dairy/browser/.asset.py.swp
 src/bika/dairy/browser/__init__.py
 src/bika/dairy/browser/asset.py
 src/bika/dairy/browser/configure.zcml
@@ -39,7 +37,6 @@ src/bika/dairy/profiles/default/controlpanel.xml
 src/bika/dairy/profiles/default/factorytool.xml
 src/bika/dairy/profiles/default/metadata.xml
 src/bika/dairy/profiles/default/propertiestool.xml
-src/bika/dairy/profiles/default/rolemap.xml
 src/bika/dairy/profiles/default/types.xml
 src/bika/dairy/profiles/default/workflows.xml
 src/bika/dairy/profiles/default/types/Asset.xml

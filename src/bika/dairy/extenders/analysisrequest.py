@@ -1,7 +1,8 @@
 from archetypes.schemaextender.interfaces import IOrderableSchemaExtender
+from bika.dairy import bikaDairyMessageFactory as _
+from bika.dairy.interfaces import IBikaDairyLayer
 from bika.lims.fields import ExtStringField
 from bika.lims.interfaces import IAnalysisRequest
-from bika.dairy import bikaDairyMessageFactory as _
 from Products.Archetypes.public import StringWidget
 from Products.CMFCore import permissions
 from zope.component import adapts
@@ -12,7 +13,7 @@ class AnalysisRequestSchemaExtender(object):
     adapts(IAnalysisRequest)
     implements(IOrderableSchemaExtender)
 
-    fields = [
+    _fields = [
         ExtStringField(
             'PatientID',
             searchable=True,
@@ -53,8 +54,11 @@ class AnalysisRequestSchemaExtender(object):
         self.context = context
 
     def getOrder(self, schematas):
-        schematas["default"].append("PatientID")
+        if IBikaDairyLayer.providedBy(self.context.REQUEST):
+            schematas["default"].append("PatientID")
         return schematas
 
     def getFields(self):
-        return self.fields
+        if IBikaDairyLayer.providedBy(self.context.REQUEST):
+            return self._fields
+        return []
